@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Admin = () => {
+const Layout = ({ children }) => {
   const [sidebarSize, setSidebarSize] = useState(280);
   const [openAccountMenu, setOpenAccountMenu] = useState(false);
 
@@ -52,9 +52,11 @@ const Admin = () => {
             </button>
           </div>
         </nav>
+
+        <div>{children}</div>
       </section>
     </div>
   );
 };
 
-export default Admin;
+export default Layout;
