@@ -5,7 +5,7 @@ const Layout = ({ children }) => {
   const [openAccountMenu, setOpenAccountMenu] = useState(false);
 
   return (
-    <div>
+    <div className="relative">
       <aside
         className="fixed top-0 left-0 h-full bg-indigo-600"
         style={{ width: sidebarSize, transition: "0.3s" }}
@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
           transition: "0.3s",
         }}
       >
-        <nav className="bg-white p-6 shadow  flex items-center justify-between">
+        <nav className="bg-white p-6 shadow  flex items-center justify-between sticky top-0 left-0">
           <div className="flex gap-4 items-center">
             <button
               onClick={() => setSidebarSize(sidebarSize === 280 ? 0 : 280)}
@@ -31,7 +31,7 @@ const Layout = ({ children }) => {
           <div>
             <button className="relative">
               <img
-                src="./images/avt.jpg"
+                src="/images/avt.jpg"
                 alt="avatar"
                 className="w-12 h-12 rounded-full hover:cursor-pointer"
                 onClick={() => setOpenAccountMenu(!openAccountMenu)}
@@ -53,7 +53,7 @@ const Layout = ({ children }) => {
           </div>
         </nav>
 
-        <div>{children}</div>
+        <div className="p-6">{children}</div>
       </section>
     </div>
   );
