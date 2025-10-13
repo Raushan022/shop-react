@@ -15,34 +15,34 @@ const Layout = ({ children }) => {
     },
     {
       sno: 2,
+      label: "Customers",
+      icon: <i className="ri-user-line mr-2"></i>,
+      link: "/admin/customers",
+    },
+    {
+      sno: 3,
       label: "Products",
       icon: <i className="ri-shopping-cart-line mr-2"></i>,
       link: "/admin/products",
     },
     {
-      sno: 3,
+      sno: 4,
       label: "Orders",
       icon: <i className="ri-shape-line mr-2"></i>,
       link: "/admin/orders",
     },
     {
-      sno: 4,
+      sno: 5,
       label: "Payments",
       icon: <i className="ri-money-dollar-circle-line mr-2"></i>,
       link: "/admin/payments",
     },
 
     {
-      sno: 5,
+      sno: 6,
       label: "Settings",
       icon: <i className="ri-settings-3-line mr-2"></i>,
       link: "/admin/settings",
-    },
-    {
-      sno: 6,
-      label: "Logout",
-      icon: <i className="ri-logout-circle-r-line mr-2"></i>,
-      link: "/admin/logout",
     },
   ];
 
@@ -73,6 +73,10 @@ const Layout = ({ children }) => {
                 {item.label}
               </NavLink>
             ))}
+            <button className="text-left px-4 py-3 text-gray-100 text-[17.5px] hover:bg-rose-500 hover:text-white">
+              <i className="ri-logout-circle-r-line mr-2"></i>
+              Logout
+            </button>
           </div>
         </aside>
         <section
@@ -96,7 +100,7 @@ const Layout = ({ children }) => {
             <div>
               <button className="relative">
                 <img
-                  src="/images/avt.avif"
+                  src="/images/avt.jpg"
                   className="w-10 h-10 rounded-full"
                   onClick={() => setAccountMenu(!accountMenu)}
                 />
@@ -151,6 +155,10 @@ const Layout = ({ children }) => {
                 {item.label}
               </NavLink>
             ))}
+            <button className="text-left px-4 py-3 text-gray-100 text-[17.5px] hover:bg-rose-500 hover:text-white">
+              <i className="ri-logout-circle-r-line mr-2"></i>
+              Logout
+            </button>
           </div>
         </aside>
         <section className="bg-gray-100 h-screen">
@@ -168,7 +176,7 @@ const Layout = ({ children }) => {
             <div>
               <button className="relative">
                 <img
-                  src="/images/avt.avif"
+                  src="/images/avt.jpg"
                   className="w-10 h-10 rounded-full"
                   onClick={() => setAccountMenu(!accountMenu)}
                 />
