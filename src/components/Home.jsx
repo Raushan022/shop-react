@@ -115,15 +115,15 @@ const Home = () => {
           </Swiper>
         </header>
 
-        <div className="p-16">
+        <div className="md:p-16 p-8">
           <h1 className="text-3xl font-bold text-center">Latest Products</h1>
-          <p className="mx-auto text-center text-gray-600 w-7/12 mt-2 mb-16">
+          <p className="mx-auto text-center text-gray-600 md:w-7/12 mt-2 mb-16">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non eius
             incidunt iusto, impedit placeat velit esse, temporibus consectetur
             maiores molestias accusantiumo.
           </p>
 
-          <div className="w-10/12 mx-auto grid grid-cols-4 gap-12">
+          <div className="md:w-10/12 mx-auto grid md:grid-cols-4 gap-12">
             {products.map((item, index) => (
               <div
                 key={index}
