@@ -144,6 +144,10 @@ const Home = () => {
                   <button className="bg-green-500 py-2 w-full rounded text-white font-semibold mt-4">
                     Buy Now
                   </button>
+                  <button className="bg-rose-500 py-2 w-full rounded text-white font-semibold mt-2">
+                    <i className="ri-shopping-cart-line mr-2"></i>
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             ))}
