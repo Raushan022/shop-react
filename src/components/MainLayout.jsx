@@ -1,7 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const MainLayout = ({ children }) => {
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const navigate = useNavigate();
+
   const menus = [
     {
       label: "Home",
@@ -27,7 +30,14 @@ const MainLayout = ({ children }) => {
           <div className="w-10/12 mx-auto flex items-center justify-between">
             <img src="/images/logo.jpg" alt="logo" className="w-28" />
 
-            <ul className="flex gap-4 items-center">
+            <button
+              className="md:hidden"
+              onClick={() => setOpenSidebar(!openSidebar)}
+            >
+              <i className="ri-menu-3-fill text-2xl"></i>
+            </button>
+
+            <ul className="md:flex gap-4 items-center hidden">
               {menus.map((item, index) => (
                 <li key={index}>
                   <Link
@@ -58,7 +68,7 @@ const MainLayout = ({ children }) => {
         <div>{children}</div>
 
         <footer className="bg-orange-400 py-16">
-          <div className="w-10/12 mx-auto grid grid-cols-4">
+          <div className="w-10/12 mx-auto grid md:grid-cols-4 md:gap-0 gap-8">
             <div>
               <h1 className="text-white text-2xl font-semibold mb-3">
                 Website Links
@@ -131,6 +141,22 @@ const MainLayout = ({ children }) => {
             </div>
           </div>
         </footer>
+
+        <aside
+          className="md:hidden overflow-hidden bg-slate-900 shadow-lg fixed top-0 left-0 h-full z-50"
+          style={{
+            width: openSidebar ? 250 : 0,
+            transition: "0.3s",
+          }}
+        >
+          <div className="flex flex-col gap-6 p-8">
+            {menus.map((item, index) => (
+              <Link to={item.href} key={index} className="text-white">
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </aside>
       </div>
     </>
   );
