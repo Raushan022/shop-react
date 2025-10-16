@@ -9,6 +9,7 @@ import Settings from "./components/Admin/Settings";
 import Orders from "./components/Admin/Orders";
 import Home from "./components/Home";
 import AllProducts from "./components/AllProducts";
+import Category from "./components/Category";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<AllProducts />} />
+        <Route path="/category" element={<Category />} />
         <Route path="/admin">
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="customers" element={<Customers />} />
