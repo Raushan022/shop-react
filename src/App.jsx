@@ -8,12 +8,14 @@ import Payments from "./components/Admin/Payments";
 import Settings from "./components/Admin/Settings";
 import Orders from "./components/Admin/Orders";
 import Home from "./components/Home";
+import AllProducts from "./components/AllProducts";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/products" element={<AllProducts />} />
         <Route path="/admin">
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="customers" element={<Customers />} />

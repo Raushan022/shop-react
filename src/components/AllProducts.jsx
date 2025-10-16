@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import MainLayout from "./MainLayout";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 
-const Home = () => {
+const AllProducts = () => {
   const [products, setProducts] = useState([
     {
       title: "Men's shirt blue denim",
@@ -84,37 +79,6 @@ const Home = () => {
   return (
     <MainLayout>
       <div>
-        <header>
-          <Swiper
-            pagination={true}
-            navigation={true}
-            modules={[Navigation, Pagination]}
-            slidesPerView={1}
-            // onSlideChange={() => console.log("slide change")}
-            // onSwiper={(swiper) => console.log(swiper)}
-          >
-            <SwiperSlide>
-              <img src="/images/p1.jpg" />
-            </SwiperSlide>
-
-            <SwiperSlide>
-              <img src="/images/p2.jpg" />
-            </SwiperSlide>
-
-            <SwiperSlide>
-              <img src="/images/p3.jpg" />
-            </SwiperSlide>
-
-            <SwiperSlide>
-              <img src="/images/p4.jpg" />
-            </SwiperSlide>
-
-            <SwiperSlide>
-              <img src="/images/p5.jpg" />
-            </SwiperSlide>
-          </Swiper>
-        </header>
-
         <div className="p-16">
           <h1 className="text-3xl font-bold text-center">Latest Products</h1>
           <p className="mx-auto text-center text-gray-600 w-7/12 mt-2 mb-16">
@@ -154,4 +118,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AllProducts;
