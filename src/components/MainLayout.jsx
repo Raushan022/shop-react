@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import firebaseAppConfig from "../utils/firebase-config";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+const auth = getAuth(firebaseAppConfig);
 
 const MainLayout = ({ children }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
+  const [session, setSession] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setSession(user);
+      } else {
+        setSession(null);
+      }
+    });
+  }, []);
 
   const menus = [
     {
@@ -49,18 +64,24 @@ const MainLayout = ({ children }) => {
                 </li>
               ))}
 
-              <Link
-                to="/login"
-                className="block py-6 text-center hover:bg-blue-600 w-[100px] hover:text-white"
-              >
-                Login
-              </Link>
-              <Link
-                to="/signup"
-                className="bg-blue-600 text-white py-2 px-8 text-md rounded block text-center hover:bg-rose-600 hover:text-white"
-              >
-                SignUp
-              </Link>
+              {!session && (
+                <>
+                  <Link
+                    to="/login"
+                    className="block py-6 text-center hover:bg-blue-600 w-[100px] hover:text-white"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="bg-blue-600 text-white py-2 px-8 text-md rounded block text-center hover:bg-rose-600 hover:text-white"
+                  >
+                    SignUp
+                  </Link>
+                </>
+              )}
+
+              {session && <p>logged in</p>}
             </ul>
           </div>
         </nav>

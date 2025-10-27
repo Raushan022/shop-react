@@ -1,9 +1,49 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import firebaseAppConfig from "../utils/firebase-config";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+const auth = getAuth(firebaseAppConfig);
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [passwordType, setPasswordType] = useState("password");
+  const [error, setError] = useState(null);
+  const [loader, setLoader] = useState(false);
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+  });
+
+  const signUp = async (e) => {
+    try {
+      e.preventDefault();
+      setLoader(true);
+      await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoader(false);
+    }
+  };
+
+  const handleOnChange = (e) => {
+    const name = e.target.name;
+
+    setFormData({
+      ...formData,
+      [name]: e.target.value,
+    });
+    setError(null);
+  };
 
   return (
     <div className="grid md:grid-cols-2 md:h-screen md:overflow-hidden animate__animated animate__fadeIn">
@@ -16,12 +56,13 @@ const Signup = () => {
         <p className="text-lg text-gray-600">
           Create your account to start shopping
         </p>
-        <form className="mt-8 space-y-6">
+        <form className="mt-8 space-y-6" onSubmit={signUp}>
           <div className="flex flex-col">
             <label className="font-semibold text-lg mb-1">Fullname</label>
             <input
               required
               name="fullname"
+              onChange={handleOnChange}
               placeholder="Enter your name"
               className="p-3 border border-gray-300 rounded"
             />
@@ -33,6 +74,7 @@ const Signup = () => {
               required
               type="email"
               name="email"
+              onChange={handleOnChange}
               placeholder="example@mail.com"
               className="p-3 border border-gray-300 rounded"
             />
@@ -44,6 +86,7 @@ const Signup = () => {
               required
               type={passwordType}
               name="password"
+              onChange={handleOnChange}
               placeholder="********"
               className="p-3 border border-gray-300 rounded"
             />
@@ -64,9 +107,13 @@ const Signup = () => {
             </button>
           </div>
 
-          <button className="py-3 px-8 rounded bg-blue-600 text-white font-semibold hover:bg-rose-600">
-            Signup
-          </button>
+          {loader ? (
+            <h1 className="text-lg font-semibold text-gray-600 ">Loading...</h1>
+          ) : (
+            <button className="py-3 px-8 rounded bg-blue-600 text-white font-semibold hover:bg-rose-600">
+              Signup
+            </button>
+          )}
         </form>
 
         <div className="mt-2">
@@ -75,6 +122,18 @@ const Signup = () => {
             Signin
           </Link>
         </div>
+
+        {error && (
+          <div className="flex justify-between items-center mt-2 bg-rose-600 p-3 rounded shadow text-white font-semibold animate__animated animate__pulse">
+            <p>{error}</p>
+            <button
+              onClick={() => setError(null)}
+              className="hover:cursor-pointer"
+            >
+              <i className="ri-close-line"></i>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
