@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import firebaseAppConfig from "../utils/firebase-config";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 const auth = getAuth(firebaseAppConfig);
 
 const MainLayout = ({ children }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [session, setSession] = useState(null);
+  const [accountMenu, setAccountMenu] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,7 +64,7 @@ const MainLayout = ({ children }) => {
               <i className="ri-menu-3-fill text-2xl"></i>
             </button>
 
-            <ul className="md:flex gap-4 items-center hidden">
+            <ul className="md:flex gap-4 items-center hidden z-50">
               {menus.map((item, index) => (
                 <li key={index}>
                   <Link
@@ -92,7 +93,45 @@ const MainLayout = ({ children }) => {
                 </>
               )}
 
-              {session && <p>logged in</p>}
+              {session && (
+                <button
+                  className="relative"
+                  onClick={() => setAccountMenu(!accountMenu)}
+                >
+                  <img
+                    src="/images/avt.jpg"
+                    alt="profile_pic"
+                    className="w-10 h-10 rounded-full"
+                  />
+                  {accountMenu && (
+                    <div className="flex flex-col items-start animate__animated animate__fadeIn w-[150px] py-3 bg-white absolute top-12 right-0 shadow-xl">
+                      <Link
+                        to="/profile"
+                        className="w-full text-left px-3 py-2 hover:bg-gray-100"
+                      >
+                        <i className="ri-user-line mr-2"></i>
+                        My Profile
+                      </Link>
+
+                      <Link
+                        to="/cart"
+                        className="w-full text-left px-3 py-2 hover:bg-gray-100"
+                      >
+                        <i className="ri-shopping-cart-line mr-2"></i>
+                        Cart
+                      </Link>
+
+                      <button
+                        className="w-full text-left px-3 py-2 hover:bg-gray-100"
+                        onClick={() => signOut(auth)}
+                      >
+                        <i className="ri-logout-circle-r-line mr-2"></i>
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </button>
+              )}
             </ul>
           </div>
         </nav>
