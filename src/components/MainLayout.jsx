@@ -53,7 +53,7 @@ const MainLayout = ({ children }) => {
   return (
     <>
       <div>
-        <nav className="shadow-lg bg-slate-50 sticky top-0 left-0">
+        <nav className="shadow-lg bg-slate-50 sticky top-0 left-0 z-50">
           <div className="w-10/12 mx-auto flex items-center justify-between">
             <img src="/images/logo.jpg" alt="logo" className="w-28" />
 
@@ -104,7 +104,7 @@ const MainLayout = ({ children }) => {
                     className="w-10 h-10 rounded-full"
                   />
                   {accountMenu && (
-                    <div className="flex flex-col items-start animate__animated animate__fadeIn w-[150px] py-3 bg-white absolute top-12 right-0 shadow-xl">
+                    <div className="flex flex-col items-start animate__animated animate__fadeIn w-[150px] py-3 bg-white absolute top-12 right-0 shadow-xl z-50">
                       <Link
                         to="/profile"
                         className="w-full text-left px-3 py-2 hover:bg-gray-100"

@@ -86,7 +86,6 @@ const Home = () => {
       <div>
         <header>
           <Swiper
-            className="z-[-1]"
             pagination={true}
             navigation={true}
             modules={[Navigation, Pagination]}
