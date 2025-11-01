@@ -14,6 +14,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import "animate.css";
 import Contact from "./components/Contact";
+import PreGuard from "./components/Guard/PreGuard";
 
 const App = () => {
   return (
@@ -22,8 +23,11 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<AllProducts />} />
         <Route path="/category" element={<Category />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route element={<PreGuard />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
+
         <Route path="/contact-us" element={<Contact />} />
         <Route path="/admin">
           <Route path="dashboard" element={<Dashboard />} />
