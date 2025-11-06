@@ -10,6 +10,8 @@ import Orders from "./components/Admin/Orders";
 import Home from "./components/Home";
 import AllProducts from "./components/AllProducts";
 import Category from "./components/Category";
+import Cart from "./components/Cart";
+import Profile from "./components/Profile";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import "animate.css";
@@ -23,6 +25,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<AllProducts />} />
         <Route path="/category" element={<Category />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/profile" element={<Profile />} />
         <Route element={<PreGuard />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
