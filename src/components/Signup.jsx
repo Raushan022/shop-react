@@ -2,7 +2,11 @@ import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import firebaseAppConfig from "../utils/firebase-config";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 
 const auth = getAuth(firebaseAppConfig);
 
@@ -27,6 +31,7 @@ const Signup = () => {
         formData.email,
         formData.password
       );
+      await updateProfile(auth.currentUser, { displayName: formData.fullname });
       navigate("/");
     } catch (err) {
       setError(err.message);

@@ -12,6 +12,8 @@ const MainLayout = ({ children }) => {
   const [accountMenu, setAccountMenu] = useState(false);
   const navigate = useNavigate();
 
+  console.log(session);
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
