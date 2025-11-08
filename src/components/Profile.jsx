@@ -1,7 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "./MainLayout";
+import firebaseAppConfig from "../utils/firebase-config";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+
+const auth = getAuth(firebaseAppConfig);
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const [session, setSession] = useState(null);
+  const [formValue, setFormValue] = useState({
+    fullname: "",
+    email: "",
+    mobile: "9798798",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    pincode: "",
+  });
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setSession(user);
+      } else {
+        setSession(false);
+        navigate("/login");
+      }
+    });
+  }, []);
+
+  const handleFormValue = (e) => {
+    const input = e.target;
+    const name = input.name;
+    const value = input.value;
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+  };
+
   return (
     <MainLayout>
       <div className="mx-auto md:my-16 shadow-lg rounded-md p-8 md:w-7/12 border">
@@ -28,7 +67,8 @@ const Profile = () => {
               required
               name="fullname"
               className="p-2 rounded border border-gray-300"
-              value="Er Saurav"
+              onChange={handleFormValue}
+              value={session?.displayName || ""}
             />
           </div>
 
@@ -39,7 +79,8 @@ const Profile = () => {
               name="email"
               type="email"
               className="p-2 rounded border border-gray-300"
-              value="example@mail.com"
+              onChange={handleFormValue}
+              value={session?.email || ""}
             />
           </div>
 
@@ -50,7 +91,8 @@ const Profile = () => {
               name="mobile"
               type="number"
               className="p-2 rounded border border-gray-300"
-              value="9472395194"
+              onChange={handleFormValue}
+              value={formValue.mobile}
             />
           </div>
 
@@ -63,7 +105,8 @@ const Profile = () => {
               name="address"
               type="text"
               className="p-2 rounded border border-gray-300"
-              value="Electronic city, Phase-2, Bengaluru, Karnatka 560100"
+              onChange={handleFormValue}
+              value={formValue.address}
             />
           </div>
 
@@ -74,7 +117,8 @@ const Profile = () => {
               name="city"
               type="text"
               className="p-2 rounded border border-gray-300"
-              value="Bengaluru"
+              onChange={handleFormValue}
+              value={formValue.city}
             />
           </div>
 
@@ -85,7 +129,8 @@ const Profile = () => {
               name="state"
               type="text"
               className="p-2 rounded border border-gray-300"
-              value="Karnatka"
+              onChange={handleFormValue}
+              value={formValue.state}
             />
           </div>
 
@@ -96,7 +141,8 @@ const Profile = () => {
               name="country"
               type="text"
               className="p-2 rounded border border-gray-300"
-              value="India"
+              onChange={handleFormValue}
+              value={formValue.country}
             />
           </div>
 
@@ -107,7 +153,8 @@ const Profile = () => {
               name="pincode"
               type="number"
               className="p-2 rounded border border-gray-300"
-              value="543002"
+              onChange={handleFormValue}
+              value={formValue.pincode}
             />
           </div>
           <button className="px-4 py-2 bg-rose-600 text-white rounded w-fit hover:bg-green-600">
