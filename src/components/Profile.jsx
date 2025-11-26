@@ -5,8 +5,10 @@ import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 const auth = getAuth(firebaseAppConfig);
+const db = getFirestore(firebaseAppConfig);
 const storage = getStorage();
 
 const Profile = () => {
@@ -16,6 +18,14 @@ const Profile = () => {
     fullname: "",
     email: "",
     mobile: "",
+  });
+  const [addressFormValue, setAddressFormValue] = useState({
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    pincode: "",
+    userId: "",
   });
 
   useEffect(() => {
@@ -36,6 +46,14 @@ const Profile = () => {
         fullname: session.displayName,
         mobile: session.phoneNumber ? session.phoneNumber : "",
       });
+
+      //set user id of user when user logins and store in addressFormValue
+      setAddressFormValue({
+        ...addressFormValue,
+        userId: session.uid,
+      });
+
+      //fetching address when user logins so that it dont show blank for already filled address
     }
   }, [session]);
 
@@ -80,9 +98,32 @@ const Profile = () => {
     });
   };
 
-  const setAddress = (e) => {
-    e.preventDefault();
-    alert("kjnjn");
+  const handleAdressFormValue = (e) => {
+    const input = e.target;
+    const name = input.name;
+    const value = input.value;
+
+    setAddressFormValue({
+      ...addressFormValue,
+      [name]: value,
+    });
+  };
+
+  const saveAddress = async (e) => {
+    try {
+      e.preventDefault();
+      await addDoc(collection(db, "addresses"), addressFormValue);
+      new Swal({
+        icon: "success",
+        title: "Address Saved !!",
+      });
+    } catch (err) {
+      new Swal({
+        icon: "error",
+        title: "Failed !",
+        text: err.message,
+      });
+    }
   };
 
   return (
@@ -159,16 +200,15 @@ const Profile = () => {
 
         <hr className="my-6" />
 
-        <form className="grid grid-cols-2 gap-6" onSubmit={setAddress}>
+        <form className="grid grid-cols-2 gap-6" onSubmit={saveAddress}>
           <div className="flex flex-col gap-2 col-span-2">
             <label className="text-lg font-semibold">Area/Street/Vill</label>
             <input
               required
               name="address"
               type="text"
+              onChange={handleAdressFormValue}
               className="p-2 rounded border border-gray-300"
-              onChange={handleFormValue}
-              value={formValue.address}
             />
           </div>
 
@@ -178,9 +218,8 @@ const Profile = () => {
               required
               name="city"
               type="text"
+              onChange={handleAdressFormValue}
               className="p-2 rounded border border-gray-300"
-              onChange={handleFormValue}
-              value={formValue.city}
             />
           </div>
 
@@ -190,9 +229,8 @@ const Profile = () => {
               required
               name="state"
               type="text"
+              onChange={handleAdressFormValue}
               className="p-2 rounded border border-gray-300"
-              onChange={handleFormValue}
-              value={formValue.state}
             />
           </div>
 
@@ -202,9 +240,8 @@ const Profile = () => {
               required
               name="country"
               type="text"
+              onChange={handleAdressFormValue}
               className="p-2 rounded border border-gray-300"
-              onChange={handleFormValue}
-              value={formValue.country}
             />
           </div>
 
@@ -214,9 +251,8 @@ const Profile = () => {
               required
               name="pincode"
               type="number"
+              onChange={handleAdressFormValue}
               className="p-2 rounded border border-gray-300"
-              onChange={handleFormValue}
-              value={formValue.pincode}
             />
           </div>
 
